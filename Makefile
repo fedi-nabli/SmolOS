@@ -2,7 +2,7 @@ LD=ld86
 
 FLAGS=-0 -I./src -ansi -c 
 
-OBJECTS= ./build/kernel.o
+OBJECTS= ./build/kernel.o ./build/disk/disk.asm.o
 
 all: ./bin/boot.bin ./bin/kernel.bin
 	rm -rf ./bin/os.bin
@@ -15,6 +15,9 @@ all: ./bin/boot.bin ./bin/kernel.bin
 
 ./build/kernel.o: ./src/kernel.c ./src/kernel.h
 	bcc $(FLAGS) ./src/kernel.c -o ./build/kernel.o
+
+./build/disk/disk.asm.o: ./src/disk/disk.asm
+	nasm -f as86 ./src/disk/disk.asm -o ./build/disk/disk.asm.o
 
 ./bin/kernel.bin: ${OBJECTS} 
 	$(LD) -d -M ${OBJECTS} -L/usr/lib/bcc/ -lc -o ./bin/kernel.bin

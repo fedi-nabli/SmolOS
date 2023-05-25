@@ -1,5 +1,3 @@
-![SmolOS build workflow](https://github.com/fedi-nabli/SmolOS/actions/workflows/build.yml/badge.svg)
-
 # SmolOS
 
 SmolOS is an Open Source community project. It is a 16 bit kernel made using Assembly and the C programming language.
