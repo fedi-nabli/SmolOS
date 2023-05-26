@@ -1,8 +1,8 @@
 LD=ld86
-
+INC = -I./src
 FLAGS=-0 -I./src -ansi -c 
 
-OBJECTS= ./build/kernel.o ./build/disk/disk.asm.o ./build/display/display.asm.o ./build/display/display.o
+OBJECTS= ./build/kernel.o ./build/disk/disk.asm.o ./build/display/display.asm.o ./build/display/display.o ./build/memory/memory.o
 
 all: ./bin/boot.bin ./bin/kernel.bin
 	rm -rf ./bin/os.bin
@@ -23,7 +23,10 @@ all: ./bin/boot.bin ./bin/kernel.bin
 	nasm -f as86 ./src/display/display.asm -o ./build/display/display.asm.o
 
 ./build/display/display.o: ./src/display/display.c ./src/display/display.h
-	bcc $(FLAGS) ./src/display/display.c -o ./build/display/display.o
+	bcc $(FLAGS) $(INC) -I./src/display ./src/display/display.c -o ./build/display/display.o
+
+./build/memory/memory.o: ./src/memory/memory.c ./src/memory/memory.h
+	bcc $(FLAGS) $(INC) -I./src/memory ./src/memory/memory.c -o ./build/memory/memory.o
 
 ./bin/kernel.bin: ${OBJECTS} 
 	$(LD) -d -M ${OBJECTS} -L/usr/lib/bcc/ -lc -o ./bin/kernel.bin
