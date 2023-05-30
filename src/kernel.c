@@ -9,3 +9,10 @@ void main()
   // Infinite loop
   while (1) {}
 }
+
+void panic(char* message)
+{
+  print("!!!KERNEL PANIC!!!");
+  print(message);
+  while (1) {}
+}

@@ -2,7 +2,7 @@ LD=ld86
 INC = -I./src
 FLAGS=-0 -I./src -ansi -c 
 
-OBJECTS= ./build/kernel.o ./build/disk/disk.asm.o ./build/display/display.asm.o ./build/display/display.o ./build/memory/memory.o ./build/string/string.o
+OBJECTS= ./build/kernel.o ./build/disk/disk.asm.o ./build/display/display.asm.o ./build/display/display.o ./build/memory/memory.o ./build/memory/heap/heap.o ./build/memory/heap/kheap.o ./build/string/string.o
 
 all: ./bin/boot.bin ./bin/kernel.bin
 	rm -rf ./bin/os.bin
@@ -27,6 +27,12 @@ all: ./bin/boot.bin ./bin/kernel.bin
 
 ./build/memory/memory.o: ./src/memory/memory.c ./src/memory/memory.h
 	bcc $(FLAGS) $(INC) -I./src/memory ./src/memory/memory.c -o ./build/memory/memory.o
+
+./build/memory/heap/heap.o: ./src/memory/heap/heap.c ./src/memory/heap/heap.h
+	bcc $(FLAGS) $(INC) -I./src/memory/heap ./src/memory/heap/heap.c -o ./build/memory/heap/heap.o
+
+./build/memory/heap/kheap.o: ./src/memory/heap/heap.c ./src/memory/heap/kheap.h
+	bcc $(FLAGS) $(INC) -I./src/memory/heap ./src/memory/heap/kheap.c -o ./build/memory/heap/kheap.o
 
 ./build/string/string.o: ./src/string/string.c ./src/string/string.h
 	bcc $(FLAGS) $(INC) -I./src/string ./src/string/string.c -o ./build/string/string.o
